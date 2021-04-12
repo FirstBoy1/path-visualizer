@@ -1,38 +1,115 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-color: #fff;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header {
+  background-color: #2e4054;
+  padding: 5px 20px;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  color: #fff;
+}
+
+.header__item {
+  margin-right: 20px;
+}
+
+.header__heading {
+  font-size: 1rem;
+  margin: 0;
+  margin-right: 20px;
+}
+
+.header__btn {
+  color: #fff;
+  border: none;
+  background: none;
+}
+
+.header__visualize-btn {
+  background: #16b494;
+  padding: 10px;
+}
+
+.info-bar {
+  padding: 20px;
+  padding-top: 10px;
+  display: flex;
+}
+
+.item {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  margin: 0 25px;
 }
 
-.App-link {
-  color: #61dafb;
+.item .text {
+  margin-left: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.item__box {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.item__unvisited-box {
+  border: 1px solid rgb(140, 187, 235);
+}
+
+.item__visited-box-1 {
+  background: #40c8df;
+  margin-right: 10px;
+}
+
+.item__visited-box-2 {
+  background: #c16dff;
+}
+
+.item__shortest-box {
+  background: #fffe5f;
+}
+
+.item__wall-box {
+  background: #0d2f3f;
+}
+
+.container {
+  border: 1px solid rgb(140, 187, 235);
+}
+
+.row {
+  display: flex;
+  flex-basis: 40px;
+}
+
+.cell {
+  border: 1px solid rgb(140, 187, 235);
+  border-top: 0;
+  border-left: 0;
+  min-width: 20px;
+  max-width: 20px;
+  min-height: 20px;
+  max-height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s;
+}
+
+svg {
+  transition: all 0.1s;
+}
+
+.selected {
+  background-color: cornflowerblue;
+}
+
+::selection {
+  background: none;
 }
