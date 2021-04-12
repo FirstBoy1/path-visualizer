@@ -1,13 +1,17 @@
 interface Props {
   clearBoard: () => void
+  startBreadthFirstSearch: () => void
 }
 
-export function Header({ clearBoard }: Props) {
+export function Header({ clearBoard, startBreadthFirstSearch }: Props) {
   return (
     <div className="header">
       <h1 className="header__item header__heading">Pathfinding Visualizer</h1>
       <div className="header__item">
-        <button className="header__btn header__visualize-btn">
+        <button
+          onClick={startBreadthFirstSearch}
+          className="header__btn header__visualize-btn"
+        >
           Visualize!
         </button>
       </div>

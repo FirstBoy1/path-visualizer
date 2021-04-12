@@ -2,6 +2,14 @@
   box-sizing: border-box;
 }
 
+:root {
+  --wall-color: #0d2f3f;
+  --unvisited-color: rgb(140, 187, 235);
+  --visited-color-1: #40c8df;
+  --visited-color-2: #c16dff;
+  --shortest-color: #fffe5f;
+}
+
 body {
   background-color: #fff;
 }
@@ -36,8 +44,7 @@ body {
 }
 
 .info-bar {
-  padding: 20px;
-  padding-top: 10px;
+  padding: 10px;
   display: flex;
 }
 
@@ -59,28 +66,29 @@ body {
 }
 
 .item__unvisited-box {
-  border: 1px solid rgb(140, 187, 235);
+  border: 1px solid var(--unvisited-color);
 }
 
 .item__visited-box-1 {
-  background: #40c8df;
+  background: var(--visited-color-1);
   margin-right: 10px;
 }
 
 .item__visited-box-2 {
-  background: #c16dff;
+  background: var(--visited-color-2);
 }
 
 .item__shortest-box {
-  background: #fffe5f;
+  background: var(--shortest-color);
 }
 
 .item__wall-box {
-  background: #0d2f3f;
+  background: var(--wall-color);
 }
 
 .container {
   border: 1px solid rgb(140, 187, 235);
+  margin: 5px;
 }
 
 .row {
@@ -104,10 +112,35 @@ body {
 
 svg {
   transition: all 0.1s;
+  color: var(--wall-color);
 }
 
-.selected {
-  background-color: cornflowerblue;
+.wall {
+  background-color: var(--wall-color);
+  border-color: var(--wall-color);
+  animation-name: small-big;
+  animation-duration: 0.5s;
+}
+
+@keyframes small-big {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.explored {
+  background-color: var(--visited-color-1);
+}
+
+.path {
+  background-color: var(--shortest-color);
+  border-color: var(--shortest-color);
 }
 
 ::selection {

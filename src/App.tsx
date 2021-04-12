@@ -4,15 +4,16 @@ import { BiRadioCircleMarked } from 'react-icons/bi'
 
 import { InfoBar } from './InfoBar'
 import { Header } from './Header'
+import { breadthFirstSearch } from './search-algos'
 import './App.css'
 
-const ROWS = 30
-const COLS = 40
+const ROWS = 28
+const COLS = 66
 
 function buildMatrix() {
   return Array(ROWS)
     .fill(null)
-    .map(() => Array(COLS).fill(false))
+    .map(() => Array(COLS).fill(null))
 }
 
 function App() {
@@ -22,81 +23,94 @@ function App() {
   const [target, setTarget] = useState([15, 30])
   const [startPressed, setStartPressed] = useState(false)
   const [targetPressed, setTargetPressed] = useState(false)
+  const [solution, setSolution] = useState<null | any[]>(null)
+  const [explored, setExplored] = useState<any[]>([])
+  const [algo, setAlgo] = useState(1)
+
+  const handleMouseMove = (i: any, j: any) => {
+    if (startPressed && start[0] !== target[0] && start[1] !== target[1]) {
+      setStart([i, j])
+    }
+    if (targetPressed) {
+      setTarget([i, j])
+    }
+    if (pressed) {
+      if (
+        matrix[i][j] ||
+        (start[0] === i && start[1] === j) ||
+        (target[0] === i && target[1] === j)
+      )
+        return
+
+      setMatrix((prevMatrix) => {
+        const newMatrix = prevMatrix.map((row, rowIdx) =>
+          row.map((col, colIdx) => (rowIdx === i && colIdx === j) || col)
+        )
+        return newMatrix
+      })
+    }
+  }
+
+  const handleMouseDown = (event: any, i: any, j: any) => {
+    if (start[0] === i && start[1] === j) {
+      event.stopPropagation()
+      setStartPressed(true)
+    }
+    if (target[0] === i && target[1] === j) {
+      event.stopPropagation()
+      setTargetPressed(true)
+    }
+  }
+
+  const handleMouseUp = (event: any, i: any, j: any) => {
+    if (startPressed) {
+      event.stopPropagation()
+      setStart([i, j])
+      setStartPressed(false)
+      setMatrix((prevMatrix) => {
+        const newMatrix = prevMatrix.map((row, rowIdx) =>
+          row.map((col, colIdx) =>
+            rowIdx === start[0] && colIdx === start[1] ? false : col
+          )
+        )
+        return newMatrix
+      })
+    }
+    if (target[0] === i && target[1] === j) {
+      event.stopPropagation()
+      setTarget([i, j])
+      setTargetPressed(false)
+      setMatrix((prevMatrix) => {
+        const newMatrix = prevMatrix.map((row, rowIdx) =>
+          row.map((col, colIdx) =>
+            rowIdx === target[0] && colIdx === target[1] ? false : col
+          )
+        )
+        return newMatrix
+      })
+    }
+  }
+
+  const isPathNode = (i: any, j: any) => {
+    return solution && solution.find(([r, c]) => r === i && c === j)
+  }
+
+  const isExploredNode = (i: any, j: any) => {
+    return explored.find(([r, c]) => r === i && c === j)
+  }
 
   const matrixElement = matrix.map((arr, i) => {
     const row = arr.map((_, j) => {
       return (
         <div
           key={j + i}
-          onMouseMove={() => {
-            if (
-              startPressed &&
-              start[0] !== target[0] &&
-              start[1] !== target[1]
-            ) {
-              setStart([i, j])
-            }
-            if (targetPressed) {
-              setTarget([i, j])
-            }
-            if (pressed) {
-              if (
-                matrix[i][j] ||
-                (start[0] === i && start[1] === j) ||
-                (target[0] === i && target[1] === j)
-              )
-                return
-
-              setMatrix((prevMatrix) => {
-                const newMatrix = prevMatrix.map((row, rowIdx) =>
-                  row.map(
-                    (col, colIdx) => (rowIdx === i && colIdx === j) || col
-                  )
-                )
-                return newMatrix
-              })
-            }
-          }}
-          onMouseDown={(event) => {
-            if (start[0] === i && start[1] === j) {
-              event.stopPropagation()
-              setStartPressed(true)
-            }
-            if (target[0] === i && target[1] === j) {
-              event.stopPropagation()
-              setTargetPressed(true)
-            }
-          }}
-          onMouseUp={(event) => {
-            if (startPressed) {
-              event.stopPropagation()
-              setStart([i, j])
-              setStartPressed(false)
-              setMatrix((prevMatrix) => {
-                const newMatrix = prevMatrix.map((row, rowIdx) =>
-                  row.map((col, colIdx) =>
-                    rowIdx === start[0] && colIdx === start[1] ? false : col
-                  )
-                )
-                return newMatrix
-              })
-            }
-            if (target[0] === i && target[1] === j) {
-              event.stopPropagation()
-              setTarget([i, j])
-              setTargetPressed(false)
-              setMatrix((prevMatrix) => {
-                const newMatrix = prevMatrix.map((row, rowIdx) =>
-                  row.map((col, colIdx) =>
-                    rowIdx === target[0] && colIdx === target[1] ? false : col
-                  )
-                )
-                return newMatrix
-              })
-            }
-          }}
+          onMouseMove={() => handleMouseMove(i, j)}
+          onMouseDown={(event) => handleMouseDown(event, i, j)}
+          onMouseUp={(event) => handleMouseUp(event, i, j)}
           id={`${j + 1 + i * COLS}`}
-          className={`cell ${matrix[i][j] ? 'selected' : ''}`}
+          className={`cell ${matrix[i][j] ? 'wall' : ''} ${
+            isPathNode(i, j) ? 'path' : ''
+          } ${isExploredNode(i, j) ? 'explored' : ''}`}
         >
           {i === start[0] && j === start[1] ? (
             <FaGreaterThan
@@ -119,9 +133,24 @@ function App() {
     )
   })
 
+  function handleBreadthFirstSearch() {
+    const { explored, solution } = breadthFirstSearch(matrix, start, target)
+    setSolution(solution)
+    setExplored(explored)
+  }
+
+  function handleClearBoard() {
+    setMatrix(buildMatrix())
+    setExplored([])
+    setSolution(null)
+  }
+
   return (
     <div>
-      <Header clearBoard={() => setMatrix(buildMatrix())} />
+      <Header
+        startBreadthFirstSearch={handleBreadthFirstSearch}
+        clearBoard={handleClearBoard}
+      />
       <InfoBar />
       <div
         onMouseDown={() => setPressed(true)}
