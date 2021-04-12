@@ -27,6 +27,8 @@ function App() {
   const [explored, setExplored] = useState<any[]>([])
   const [algo, setAlgo] = useState(1)
 
+  console.log(algo)
+
   const handleMouseMove = (i: any, j: any) => {
     if (startPressed && start[0] !== target[0] && start[1] !== target[1]) {
       setStart([i, j])

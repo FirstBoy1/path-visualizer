@@ -59,20 +59,20 @@ function neighbors(state, matrix, width, height) {
   return result
 }
 
-function getWalls(matrix) {
-  const walls = []
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < matrix[0].length; j++) {
-      if (matrix[i][j]) walls.push([i, j])
-    }
-  }
-  return walls
-}
+// function getWalls(matrix) {
+//   const walls = []
+//   for (let i = 0; i < matrix.length; i++) {
+//     for (let j = 0; j < matrix[0].length; j++) {
+//       if (matrix[i][j]) walls.push([i, j])
+//     }
+//   }
+//   return walls
+// }
 
 export function breadthFirstSearch(matrix, start, target) {
   const height = matrix.length
   const width = matrix[0].length
-  const walls = getWalls(matrix)
+  // const walls = getWalls(matrix)
   const explored = []
   let solution = null
 
