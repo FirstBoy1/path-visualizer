@@ -148,6 +148,7 @@ function App() {
   return (
     <div>
       <Header
+        setAlgo={setAlgo}
         startBreadthFirstSearch={handleBreadthFirstSearch}
         clearBoard={handleClearBoard}
       />

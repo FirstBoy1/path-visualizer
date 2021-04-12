@@ -1,12 +1,10 @@
-interface Props {
-  clearBoard: () => void
-  startBreadthFirstSearch: () => void
-}
+import { AlgoSelector } from './AlgoSelector'
 
-export function Header({ clearBoard, startBreadthFirstSearch }: Props) {
+export function Header({ clearBoard, startBreadthFirstSearch, setAlgo }) {
   return (
     <div className="header">
       <h1 className="header__item header__heading">Pathfinding Visualizer</h1>
+      <AlgoSelector setAlgo={setAlgo} />
       <div className="header__item">
         <button
           onClick={startBreadthFirstSearch}
