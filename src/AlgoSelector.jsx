@@ -11,7 +11,7 @@ function DropDown({ setAlgo, setOpen }) {
       <div onClick={() => onClick(1)} className="header__dropdown-item">
         <span>Breadth First Search</span>
       </div>
-      <div onClick={() => onClick(1)} className="header__dropdown-item">
+      <div onClick={() => onClick(2)} className="header__dropdown-item">
         <span>Depth First Search</span>
       </div>
     </div>

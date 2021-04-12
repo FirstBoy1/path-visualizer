@@ -69,14 +69,20 @@ function neighbors(state, matrix, width, height) {
 //   return walls
 // }
 
-export function breadthFirstSearch(matrix, start, target) {
+export function breadthFirstSearch(matrix, start, target, algo) {
   const height = matrix.length
   const width = matrix[0].length
   // const walls = getWalls(matrix)
   const explored = []
   let solution = null
 
-  const frontier = new QueueFrontier()
+  let frontier
+  if (algo === 1) {
+    frontier = new QueueFrontier()
+  } else if (algo === 2) {
+    frontier = new StackFrontier()
+  }
+
   frontier.add(new Node(start, null, null))
 
   while (!frontier.empty()) {
