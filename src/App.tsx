@@ -6,6 +6,7 @@ import { InfoBar } from './InfoBar'
 import { Header } from './Header'
 import { breadthFirstSearch } from './search-algos'
 import './App.css'
+import { sleep } from './utils'
 
 const ROWS = 28
 const COLS = 66
@@ -23,7 +24,7 @@ function App() {
   const [target, setTarget] = useState([15, 30])
   const [startPressed, setStartPressed] = useState(false)
   const [targetPressed, setTargetPressed] = useState(false)
-  const [solution, setSolution] = useState<null | any[]>(null)
+  // const [solution, setSolution] = useState<null | any[]>(null)
   const [explored, setExplored] = useState<any[]>([])
   const [algo, setAlgo] = useState(1)
 
@@ -91,9 +92,9 @@ function App() {
     }
   }
 
-  const isPathNode = (i: any, j: any) => {
-    return solution && solution.find(([r, c]) => r === i && c === j)
-  }
+  // const isPathNode = (i: any, j: any) => {
+  //   return solution && solution.find(([r, c]) => r === i && c === j)
+  // }
 
   const isExploredNode = (i: any, j: any) => {
     return explored.find(([r, c]) => r === i && c === j)
@@ -101,6 +102,9 @@ function App() {
 
   const matrixElement = matrix.map((arr, i) => {
     const row = arr.map((_, j) => {
+      if (matrix[i][j] === '#') {
+        console.log(true)
+      }
       return (
         <div
           key={j + i}
@@ -108,9 +112,9 @@ function App() {
           onMouseDown={(event) => handleMouseDown(event, i, j)}
           onMouseUp={(event) => handleMouseUp(event, i, j)}
           id={`${j + 1 + i * COLS}`}
-          className={`cell ${matrix[i][j] ? 'wall' : ''} ${
-            isPathNode(i, j) ? 'path' : ''
-          } ${isExploredNode(i, j) ? 'explored' : ''}`}
+          className={`cell ${matrix[i][j] === true ? 'wall' : ''} ${
+            matrix[i][j] === '#' ? 'path' : ''
+          } ${matrix[i][j] === '$' ? 'explored' : ''}`}
         >
           {i === start[0] && j === start[1] ? (
             <FaGreaterThan
@@ -133,21 +137,66 @@ function App() {
     )
   })
 
-  function handleBreadthFirstSearch() {
+  async function animateSolution(solution: any) {
+    for (let [r, c] of solution) {
+      setMatrix((prevMatrix) => {
+        return prevMatrix.map((row, rowIdx) => {
+          if (rowIdx === r) {
+            return row.map((col, colIdx) => {
+              if (colIdx === c) {
+                return '#'
+              } else {
+                return col
+              }
+            })
+          } else {
+            return [...row]
+          }
+        })
+      })
+      await sleep(5)
+    }
+  }
+
+  async function animateExplore(solution: any) {
+    for (let [r, c] of solution) {
+      setMatrix((prevMatrix) => {
+        return prevMatrix.map((row, rowIdx) => {
+          if (rowIdx === r) {
+            return row.map((col, colIdx) => {
+              if (colIdx === c) {
+                return '$'
+              } else {
+                return col
+              }
+            })
+          } else {
+            return [...row]
+          }
+        })
+      })
+      await sleep(5)
+    }
+  }
+
+  async function handleBreadthFirstSearch() {
     const { explored, solution } = breadthFirstSearch(
       matrix,
       start,
       target,
       algo
     )
-    setSolution(solution)
-    setExplored(explored)
+    console.log(explored)
+    // setSolution(solution)
+    // setExplored(explored)
+    await animateExplore(explored)
+    await animateSolution(solution)
   }
 
   function handleClearBoard() {
     setMatrix(buildMatrix())
     setExplored([])
-    setSolution(null)
+    // setSolution(null)
   }
 
   return (

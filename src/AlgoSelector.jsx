@@ -30,7 +30,7 @@ export function AlgoSelector({ setAlgo }) {
     >
       Algorithms
       <span
-        style={{ borderTopColor: open ? '#fff;' : 'red;' }}
+        style={{ borderTopColor: open ? '#fff' : 'red' }}
         className="header__dropdown-icon"
       ></span>
       {open ? <DropDown setAlgo={setAlgo} setOpen={setOpen} /> : null}
