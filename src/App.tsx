@@ -24,9 +24,10 @@ function App() {
   const [target, setTarget] = useState([15, 30])
   const [startPressed, setStartPressed] = useState(false)
   const [targetPressed, setTargetPressed] = useState(false)
-  // const [solution, setSolution] = useState<null | any[]>(null)
-  const [explored, setExplored] = useState<any[]>([])
+  const [speed, setSpeed] = useState(1)
   const [algo, setAlgo] = useState(1)
+  // const [solution, setSolution] = useState<null | any[]>(null)
+  // const [explored, setExplored] = useState<any[]>([])
 
   const handleMouseMove = (i: any, j: any) => {
     if (startPressed && start[0] !== target[0] && start[1] !== target[1]) {
@@ -157,7 +158,7 @@ function App() {
           }
         })
       })
-      await sleep(5)
+      await sleep(speed)
     }
   }
 
@@ -178,7 +179,7 @@ function App() {
           }
         })
       })
-      await sleep(5)
+      await sleep(speed)
     }
   }
 
@@ -198,7 +199,7 @@ function App() {
 
   function handleClearBoard() {
     setMatrix(buildMatrix())
-    setExplored([])
+    // setExplored([])
     // setSolution(null)
   }
 
@@ -206,6 +207,7 @@ function App() {
     <div>
       <Header
         setAlgo={setAlgo}
+        setSpeed={setSpeed}
         startBreadthFirstSearch={handleBreadthFirstSearch}
         clearBoard={handleClearBoard}
       />
