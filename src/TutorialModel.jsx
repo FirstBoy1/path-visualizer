@@ -23,7 +23,7 @@ export function TutorialModel() {
     <div className="tutorial-model">
       <div className="tutorial-model__page">
         <div className="tutorial-model__page-count">{page}/3</div>
-        Will be Implement Soon!
+        Will be Implement Soon!. Just skip for now.
       </div>
       <div className="tutorial-model__btn-section">
         <button onClick={() => setCompleted(true)}>Skip</button>
