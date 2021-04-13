@@ -214,3 +214,42 @@ svg {
 ::selection {
   background: none;
 }
+
+.tutorial-model {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  width: 600px;
+  max-width: 600px;
+  height: 500px;
+  max-height: 500px;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 2px solid #555;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.tutorial-model__page-count {
+  text-align: right;
+  color: #555;
+}
+
+.tutorial-model button {
+  background: #16b494;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.tutorial-model__page {
+  flex-grow: 1;
+}
+
+.tutorial-model__btn-section {
+  display: flex;
+  justify-content: space-between;
+}

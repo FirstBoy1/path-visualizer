@@ -7,6 +7,7 @@ import { Header } from './Header'
 import { breadthFirstSearch } from './search-algos'
 import './App.css'
 import { sleep } from './utils'
+import { TutorialModel } from './TutorialModel'
 
 const ROWS = 28
 const COLS = 66
@@ -204,22 +205,25 @@ function App() {
   }
 
   return (
-    <div>
-      <Header
-        setAlgo={setAlgo}
-        setSpeed={setSpeed}
-        startBreadthFirstSearch={handleBreadthFirstSearch}
-        clearBoard={handleClearBoard}
-      />
-      <InfoBar />
-      <div
-        onMouseDown={() => setPressed(true)}
-        onMouseUp={() => setPressed(false)}
-        className="container"
-      >
-        {matrixElement}
+    <>
+      <TutorialModel />
+      <div>
+        <Header
+          setAlgo={setAlgo}
+          setSpeed={setSpeed}
+          startBreadthFirstSearch={handleBreadthFirstSearch}
+          clearBoard={handleClearBoard}
+        />
+        <InfoBar />
+        <div
+          onMouseDown={() => setPressed(true)}
+          onMouseUp={() => setPressed(false)}
+          className="container"
+        >
+          {matrixElement}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
