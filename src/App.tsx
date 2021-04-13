@@ -96,9 +96,9 @@ function App() {
   //   return solution && solution.find(([r, c]) => r === i && c === j)
   // }
 
-  const isExploredNode = (i: any, j: any) => {
-    return explored.find(([r, c]) => r === i && c === j)
-  }
+  // const isExploredNode = (i: any, j: any) => {
+  //   return explored.find(([r, c]) => r === i && c === j)
+  // }
 
   const matrixElement = matrix.map((arr, i) => {
     const row = arr.map((_, j) => {
@@ -116,6 +116,9 @@ function App() {
             matrix[i][j] === '#' ? 'path' : ''
           } ${matrix[i][j] === '$' ? 'explored' : ''}`}
         >
+          {matrix[i][j] === '$' ? (
+            <span className="explored-brick"></span>
+          ) : null}
           {i === start[0] && j === start[1] ? (
             <FaGreaterThan
               style={{ fontSize: startPressed ? '0.5rem' : '1rem' }}

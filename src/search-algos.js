@@ -94,6 +94,7 @@ export function breadthFirstSearch(matrix, start, target, algo) {
         cells.push(node.state)
         node = node.parent
       }
+      cells.push(start)
       cells.reverse()
       solution = cells
       break
